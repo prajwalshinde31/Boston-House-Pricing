@@ -23,6 +23,15 @@ def predict_api():
     output = model.predict(new_data)
     return flask.jsonify(output[0])
 
+@app.route('/predict', methods=['POST'])
+def predict():
+    data = [float(x) for x in request.form.values()]
+    final_input = scaler.transform(np.array(data).reshape(1,-1))
+    print(final_input)
+    output = model.predict()
+    return render_template('home.html', prediction_text='The Predicted Price is {}'.format(output))
+    
+
 
 if __name__ == "__main__":
     app.run(debug=True)
